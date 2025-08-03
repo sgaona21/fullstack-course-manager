@@ -1,1 +1,67 @@
-node_modules
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+bower_components/
+jspm_packages/
+.npm
+
+# Build output
+dist
+dist-ssr
+build/Release
+coverage
+lib-cov
+.next
+
+# Editor directories and files
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# TypeScript
+typings/
+
+# ESLint
+.eslintcache
+
+# npm/Yarn artifacts
+*.tgz
+.yarn-integrity
+
+# dotenv files
+*.env
+
+# REPL
+.node_repl_history
+
+# Grunt
+.grunt
+
+# node-waf
+.lock-wscript
+
+# Local configs
+*.local
+
+# SQLite
+*.db
