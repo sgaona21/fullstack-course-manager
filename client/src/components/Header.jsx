@@ -1,9 +1,11 @@
+import { NavLink } from "react-router-dom";
+
 const Header = () => {
   return (
     <header>
       <div className="wrap header--flex">
         <h1 className="header--logo">
-          <a href="index.html">Courses</a>
+          <NavLink to='/courses' >Courses</NavLink>
         </h1>
         <nav>
           <ul className="header--signedin">

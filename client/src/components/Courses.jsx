@@ -1,43 +1,18 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 
 
-const Courses = () => {
-  const [courses, setCourses] = useState([]); // manages list of courses
-
-  useEffect(() => {
-    const requestOptions = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch("http://localhost:5001/api/courses", requestOptions)
-      .then((res) => res.json())
-      .then((data) => {
-        setCourses(data);
-      })
-      .catch((err) => {
-        console.error("Error:", err);
-      });
-  }, []);
-
-
+const Courses = (props) => {
+  
   return (
     <div className="wrap main--grid">
-      <a className="course--module course--link" href="course-detail.html">
-        <h2 className="course--label">Course</h2>
-        <h3 className="course--title">Build a Basic Bookcase</h3>
-      </a>
-      <a className="course--module course--link" href="course-detail.html">
-        <h2 className="course--label">Course</h2>
-        <h3 className="course--title">Learn How to Program</h3>
-      </a>
-      <a className="course--module course--link" href="course-detail.html">
-        <h2 className="course--label">Course</h2>
-        <h3 className="course--title">Learn How to Test Programs</h3>
-      </a>
-      <a className="course--module course--add--module" href="create-course.html">
+      {props.courses.map((course) => (
+        <NavLink className="course--module course--link" key={course.id} to={`/courses/${course.id}`}>
+          <h2 className="course--label">Course</h2>
+          <h3 className="course--title">{course.title}</h3>
+        </NavLink>
+      ))}
+      <NavLink className="course--module course--add--module" to='/courses/create'>
         <span className="course--add--title">
           <svg
             version="1.1"
@@ -51,7 +26,7 @@ const Courses = () => {
           </svg>
           New Course
         </span>
-      </a>
+      </NavLink>
     </div>
   );
 };
