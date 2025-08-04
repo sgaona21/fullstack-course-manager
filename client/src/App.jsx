@@ -1,8 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
+
+//Components
 import Header from "./components/Header";
 import Courses from "./components/Courses";
 
+
 const App = () => {
+  
   return (
     <>
       <Header />

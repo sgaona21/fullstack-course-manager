@@ -1,4 +1,28 @@
+import { useState, useEffect } from "react";
+
+
 const Courses = () => {
+  const [courses, setCourses] = useState([]); // manages list of courses
+
+  useEffect(() => {
+    const requestOptions = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch("http://localhost:5001/api/courses", requestOptions)
+      .then((res) => res.json())
+      .then((data) => {
+        setCourses(data);
+      })
+      .catch((err) => {
+        console.error("Error:", err);
+      });
+  }, []);
+
+
   return (
     <div className="wrap main--grid">
       <a className="course--module course--link" href="course-detail.html">
