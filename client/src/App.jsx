@@ -11,16 +11,9 @@ import CreateCourse from "./components/CreateCourse";
 const App = () => {
   const [courses, setCourses] = useState([]); // manages all courses in db
 
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  };
-
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/courses", requestOptions);
+      const response = await fetch("http://localhost:5001/api/courses");
       const data = await response.json();
       console.log("Courses:", data);
       setCourses(data)
@@ -38,7 +31,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/courses" element={<Courses courses={courses} />}/>
-        <Route path="/courses/:id" element={<CourseDetail />}/>
+        <Route path="/courses/:id" element={<CourseDetail courses={courses} />}/>
         <Route path="/courses/create" element={<CreateCourse />}/>
       </Routes>
     </>
