@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 
 
-
 const UserSignUp = () => {
     const navigate = useNavigate();
     const [newUser, setNewUser] = useState({
