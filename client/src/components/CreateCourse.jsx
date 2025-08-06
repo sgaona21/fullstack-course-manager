@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
 const CreateCourse = () => {
   const navigate = useNavigate();
   const [newCourse, setNewCourse] = useState({
@@ -52,14 +53,13 @@ const CreateCourse = () => {
   }
 
 
-
   return (
     <div className="wrap">
       <h2>Create Course</h2>
 
       {errors.length ? (
         <div className="validation--errors">
-          <h3>Validation Errors</h3>
+          <h3>Course Creation Errors</h3>
           <ul>
             {errors.map((error, i) => <li key={i}>{error}</li>)}
           </ul>
