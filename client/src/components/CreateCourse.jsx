@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const CreateCourse = () => {
+  const navigate = useNavigate();
   const [newCourse, setNewCourse] = useState({
+    userId: 1,
     title: '',
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
   });
+  const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,36 +20,52 @@ const CreateCourse = () => {
     }));
   };
 
-  const submitNewCourseData = (e) => {
+  const submitNewCourseData = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:5001/api/courses", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCourse),
-    })
-      .then((res) => {
-        if (res.ok) {
-          console.log("Course created!");
-        } else {
-          console.error("Something went wrong.");
-        }
-      })
-      .catch((err) => console.error("Error:", err));
+    try {
+      const response = await fetch("http://localhost:5001/api/courses", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newCourse),
+      });
+
+      if (response.status === 201) {
+        console.log("New course successfully created!");
+      } else if (response.status === 400) {
+        const data = await response.json();
+        setErrors(data.errors);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
   }
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    navigate('/courses')
+  }
+
+
 
   return (
     <div className="wrap">
       <h2>Create Course</h2>
-      <div className="validation--errors">
-        <h3>Validation Errors</h3>
-        <ul>
-          <li>Please provide a value for "Title"</li>
-          <li>Please provide a value for "Description"</li>
-        </ul>
-      </div>
+
+      {errors.length ? (
+        <div className="validation--errors">
+          <h3>Validation Errors</h3>
+          <ul>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+        </div>
+      ) : null }
+
       <form onSubmit={submitNewCourseData} >
         <div className="main--flex">
           <div>
@@ -88,7 +108,7 @@ const CreateCourse = () => {
           </div>
         </div>
         <button className="button" type="submit">Create Course</button>
-        <button className="button button-secondary" type="button">Cancel</button>
+        <button className="button button-secondary" type="button" onClick={handleCancel} >Cancel</button>
       </form>
     </div>
   );

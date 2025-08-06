@@ -7,6 +7,10 @@ import Courses from "./components/Courses";
 import CourseDetail from "./components/CourseDetail";
 import CreateCourse from "./components/CreateCourse";
 import UpdateCourse from "./components/UpdateCourse";
+import UserSignUp from "./components/UserSignUp";
+import UserSignIn from "./components/UserSignIn";
+import NotFound from "./components/NotFound";
+import Error from "./components/Error";
 
 
 const App = () => {
@@ -31,10 +35,14 @@ const App = () => {
     <>
       <Header />
       <Routes>
+        <Route path="/sign-up" element={<UserSignUp />}/>
+        <Route path="/sign-in" element={<UserSignIn />}/>
         <Route path="/courses" element={<Courses courses={courses} />}/>
         <Route path="/courses/:id" element={<CourseDetail courses={courses} />}/>
         <Route path="/courses/create" element={<CreateCourse />}/>
         <Route path="/courses/:id/update" element={<UpdateCourse />}/>
+        <Route path="/error" element={<Error /> } />
+        <Route path="*" element={<NotFound /> } />
       </Routes>
     </>
   )
