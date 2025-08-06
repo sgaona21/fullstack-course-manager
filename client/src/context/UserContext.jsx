@@ -1,8 +1,10 @@
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
+    const navigate = useNavigate();
     const [authUser, setAuthUser] = useState(null);
 
     const signIn = async (credentials) => {
@@ -28,14 +30,16 @@ export const UserProvider = (props) => {
 
 
     const signOut = () => {
-
+      setAuthUser(null);
+      navigate('/courses');
     }
 
     return (
         <UserContext.Provider value={{
             authUser,
             actions: {
-                signIn
+                signIn,
+                signOut
             }
         }} >
             {props.children}
