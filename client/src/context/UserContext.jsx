@@ -5,10 +5,11 @@ import Cookies from 'js-cookie';
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
-    const cookie = Cookies.get("authenticatedUser")
+    const cookie = Cookies.get("authenticatedUser");
+    const authCredCookie = Cookies.get("authCredentials");
     const navigate = useNavigate();
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
-    const [authCredentials, setAuthCredentials] = useState(null);
+    const [authCredentials, setAuthCredentials] = useState( authCredCookie ? JSON.parse(authCredCookie) : null);
 
     const signIn = async (credentials) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
@@ -25,6 +26,7 @@ export const UserProvider = (props) => {
           setAuthUser(user);
           setAuthCredentials(encodedCredentials)
           Cookies.set("authenticatedUser", JSON.stringify(user), {expires: 1});
+          Cookies.set("authCredentials", JSON.stringify(encodedCredentials), {expires: 1});
           return user
         } else if (response.status === 401) {
             return null
@@ -36,7 +38,9 @@ export const UserProvider = (props) => {
 
     const signOut = () => {
       setAuthUser(null);
+      setAuthCredentials(null)
       Cookies.remove("authenticatedUser");
+      Cookies.remove("authCredentials");
       navigate('/courses');
     }
 

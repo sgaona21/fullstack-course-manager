@@ -16,7 +16,6 @@ const UpdateCourse = (props) => {
       const response = await fetch(`http://localhost:5001/api/courses/${id}`)
       const data = await response.json();
       setCourseDetails(data)
-      console.log(data)
     } catch (error) {
       console.error("Error fetching course details:". error)
     }
@@ -25,10 +24,6 @@ const UpdateCourse = (props) => {
   useEffect(() => {
     fetchCourseDetails();
   }, []);
-
-  useEffect(() => {
-    console.log(courseDetails)
-  }, [courseDetails]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +52,9 @@ const UpdateCourse = (props) => {
         navigate(`/courses/${id}`);
       } else if (response.status === 403) {
         const data = await response.json();
-        setErrors(data.errors);
+        setErrors(data.errors ?? [data.message ?? 'Forbidden']);
+      } else if (response.status === 401) {
+        setErrors(['You must be signed in.']);
       } else {
         throw new Error();
       }
@@ -65,6 +62,10 @@ const UpdateCourse = (props) => {
       console.log(error);
       navigate('/error');
     }
+  }
+
+  const handleCancel = () => {
+    navigate(`/courses/${id}`)
   }
   
   return (
@@ -115,7 +116,7 @@ const UpdateCourse = (props) => {
         </div>
 
         <button className="button" type="submit">Update Course</button>
-        <button className="button button-secondary" type="button">Cancel</button>
+        <button className="button button-secondary" type="button" onClick={handleCancel} >Cancel</button>
       </form>
     </div>
   );
