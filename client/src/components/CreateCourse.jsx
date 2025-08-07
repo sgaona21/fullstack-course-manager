@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+
+import UserContext from "../context/UserContext";
 
 
 const CreateCourse = () => {
+  const context = useContext(UserContext);
   const navigate = useNavigate();
   const [newCourse, setNewCourse] = useState({
-    userId: 1,
+    userId: context.authUser.id,
     title: '',
     description: '',
     estimatedTime: '',
@@ -78,7 +81,7 @@ const CreateCourse = () => {
               onChange={handleChange}
             />
 
-            <p>By Joe Smith</p>
+            <p>By Joe Smith </p>
 
             <label htmlFor="courseDescription">Course Description</label>
             <textarea

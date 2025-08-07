@@ -40,7 +40,7 @@ const App = () => {
         <Route path="/courses" element={<Courses courses={courses} />}/>
         <Route path="/courses/:id" element={<CourseDetail courses={courses} />}/>
         <Route path="/courses/create" element={<CreateCourse />}/>
-        <Route path="/courses/:id/update" element={<UpdateCourse />}/>
+        <Route path="/courses/:id/update" element={<UpdateCourse courses={courses} />}/>
         <Route path="/error" element={<Error /> } />
         <Route path="*" element={<NotFound /> } />
       </Routes>

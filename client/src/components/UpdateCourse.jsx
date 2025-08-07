@@ -1,57 +1,119 @@
-import { NavLink } from "react-router-dom";
+import { useState, useContext, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-const UpdateCourse = () => {
+import UserContext from "../context/UserContext";
+
+const UpdateCourse = (props) => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { authCredentials } = useContext(UserContext);
+  const [courseDetails, setCourseDetails] = useState({});
+  const [errors, setErrors] = useState([]);
+
+
+  const fetchCourseDetails = async () => {
+    try {
+      const response = await fetch(`http://localhost:5001/api/courses/${id}`)
+      const data = await response.json();
+      setCourseDetails(data)
+      console.log(data)
+    } catch (error) {
+      console.error("Error fetching course details:". error)
+    }
+  }
+
+  useEffect(() => {
+    fetchCourseDetails();
+  }, []);
+
+  useEffect(() => {
+    console.log(courseDetails)
+  }, [courseDetails]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCourseDetails((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const submitUpdatedCourseDetails = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${authCredentials}`,
+        },
+        body: JSON.stringify(courseDetails),
+      });
+
+      if (response.status === 204) {
+        console.log("Course details successfully updated!");
+      } else if (response.status === 403) {
+        const data = await response.json();
+        setErrors(data.errors);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  }
   
   return (
     <div className="wrap">
       <h2>Update Course</h2>
-      <form>
+      <form onSubmit={submitUpdatedCourseDetails} >
         <div className="main--flex">
           <div>
-            <label for="courseTitle">Course Title</label>
+            <label htmlFor="courseTitle">Course Title</label>
             <input
               id="courseTitle"
-              name="courseTitle"
+              name="title"
               type="text"
-              value="Build a Basic Bookcase"
+              value={courseDetails.title || ""}
+              onChange={handleChange}
             />
 
             <p>By Joe Smith</p>
 
-            <label for="courseDescription">Course Description</label>
-            <textarea id="courseDescription" name="courseDescription">
-              High-end furniture projects are great to dream about. But unless
-              you have a well-equipped shop and some serious woodworking
-            </textarea>
+            <label htmlFor="courseDescription">Course Description</label>
+            <textarea
+              id="courseDescription"
+              name="description"
+              value={courseDetails.description || ""}
+              onChange={handleChange}
+            />
           </div>
+
           <div>
-            <label for="estimatedTime">Estimated Time</label>
+            <label htmlFor="estimatedTime">Estimated Time</label>
             <input
               id="estimatedTime"
               name="estimatedTime"
               type="text"
-              value="14 hours"
+              value={courseDetails.estimatedTime || ""}
+              onChange={handleChange}
             />
 
-            <label for="materialsNeeded">Materials Needed</label>
-            <textarea id="materialsNeeded" name="materialsNeeded">
-              * 1/2 x 3/4 inch parting strip&#13;&#13;* 1 x 2 common
-              pine&#13;&#13;* 1 x 4 common pine&#13;&#13;* 1 x 10 common
-              pine&#13;&#13;* 1/4 inch thick lauan plywood&#13;&#13;* Finishing
-              Nails&#13;&#13;* Sandpaper&#13;&#13;* Wood Glue&#13;&#13;* Wood
-              Filler&#13;&#13;* Minwax Oil Based Polyurethane
-            </textarea>
+            <label htmlFor="materialsNeeded">Materials Needed</label>
+            <textarea
+              id="materialsNeeded"
+              name="materialsNeeded"
+              type="text"
+              value={courseDetails.materialsNeeded}
+              onChange={handleChange}
+            />
           </div>
         </div>
-        <button className="button" type="submit">
-          Update Course
-        </button>
-        <button
-          className="button button-secondary"
-          onclick="event.preventDefault(); location.href='index.html';"
-        >
-          Cancel
-        </button>
+
+        <button className="button" type="submit">Update Course</button>
+        <button className="button button-secondary" type="button">Cancel</button>
       </form>
     </div>
   );

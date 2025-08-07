@@ -6,6 +6,7 @@ const UserContext = createContext(null);
 export const UserProvider = (props) => {
     const navigate = useNavigate();
     const [authUser, setAuthUser] = useState(null);
+    const [authCredentials, setAuthCredentials] = useState(null);
 
     const signIn = async (credentials) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
@@ -20,6 +21,7 @@ export const UserProvider = (props) => {
         if (response.status === 200) {
           const user = await response.json();
           setAuthUser(user);
+          setAuthCredentials(encodedCredentials)
           return user
         } else if (response.status === 401) {
             return null
@@ -37,6 +39,7 @@ export const UserProvider = (props) => {
     return (
         <UserContext.Provider value={{
             authUser,
+            authCredentials,
             actions: {
                 signIn,
                 signOut
