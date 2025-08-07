@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+
+import UserContext from "../context/UserContext";
 
 
 const UserSignUp = () => {
+    const context = useContext(UserContext);
     const navigate = useNavigate();
     const [newUser, setNewUser] = useState({
         firstName: '',
@@ -11,6 +14,11 @@ const UserSignUp = () => {
         password: ''
     });
     const [errors, setErrors] = useState([]);
+
+    const credentials = {
+      emailAddress: newUser.emailAddress,
+      password: newUser.password
+    }
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -34,6 +42,7 @@ const UserSignUp = () => {
 
         if (response.status === 201) {
           console.log("New User Account successfully created!");
+          await context.actions.signIn(credentials);
           navigate('/courses');
         } else if (response.status === 400) {
           const data = await response.json();

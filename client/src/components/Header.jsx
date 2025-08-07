@@ -19,7 +19,7 @@ const Header = () => {
           <ul className="header--signedin">
             <li>Welcome, {context.authUser.name}!</li>
             <li>
-              <NavLink onClick={context.actions.signOut} > Sign Out</NavLink>
+              <NavLink onClick={context.actions.signOut}> Sign Out</NavLink>
             </li>
           </ul>
         </nav>
