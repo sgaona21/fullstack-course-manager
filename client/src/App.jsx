@@ -35,9 +35,10 @@ const App = () => {
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<Courses courses={courses}/>} />
+        <Route path="/courses" element={<Courses courses={courses} />} />
         <Route path="/sign-up" element={<UserSignUp />} />
         <Route path="/sign-in" element={<UserSignIn />} />
-        <Route path="/courses" element={<Courses courses={courses} />} />
         <Route path="/courses/:id" element={<CourseDetail courses={courses} refreshCourses={fetchCourses} />}/>
         <Route element={<PrivateRoute />}>
           <Route path="/courses/create" element={<CreateCourse refreshCourses={fetchCourses} />}/>
