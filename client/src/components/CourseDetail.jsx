@@ -1,8 +1,11 @@
 import { NavLink, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+
 import ReactMarkdown from 'react-markdown';
+import UserContext from "../context/UserContext";
 
 const CourseDetail = (props) => {
+  const {authCredentials} = useContext(UserContext);
   const { id } = useParams();
   const [course, setCourse] = useState({});
 
@@ -20,13 +23,23 @@ const CourseDetail = (props) => {
   useEffect(() => {
       fetchCourseById(id);
     }, []);
+
+  const yeetCourse = async () => {
+    const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
+      method: "DELETE",
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Basic ${authCredentials}`
+        }
+    })
+  }
   
   return (
     <>
       <div className="actions--bar">
         <div className="wrap">
           <NavLink className="button" to={`/courses/${id}/update`} >Update Course</NavLink>
-          <NavLink className="button" >Delete Course</NavLink>
+          <NavLink className="button" onClick={yeetCourse} to='/courses' >Delete Course</NavLink>
           <NavLink className="button button-secondary" to='/courses' >Return to List</NavLink>
         </div>
       </div>
