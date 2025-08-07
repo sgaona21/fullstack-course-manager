@@ -4,11 +4,11 @@ import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 
-const CreateCourse = () => {
+const CreateCourse = (props) => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
   const [newCourse, setNewCourse] = useState({
-    userId: context.authUser.id,
+    userId: context?.authUser?.id,
     title: '',
     description: '',
     estimatedTime: '',
@@ -38,6 +38,8 @@ const CreateCourse = () => {
 
       if (response.status === 201) {
         console.log("New course successfully created!");
+        props.refreshCourses();
+        navigate('/courses');
       } else if (response.status === 400) {
         const data = await response.json();
         setErrors(data.errors);

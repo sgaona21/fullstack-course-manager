@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 
 import ReactMarkdown from 'react-markdown';
@@ -6,6 +6,7 @@ import UserContext from "../context/UserContext";
 
 const CourseDetail = (props) => {
   const {authCredentials} = useContext(UserContext);
+  const navigate = useNavigate();
   const { id } = useParams();
   const [course, setCourse] = useState({});
 
@@ -32,6 +33,8 @@ const CourseDetail = (props) => {
           "Authorization": `Basic ${authCredentials}`
         }
     })
+    props.refreshCourses();
+    navigate('/courses');
   }
   
   return (
@@ -39,7 +42,7 @@ const CourseDetail = (props) => {
       <div className="actions--bar">
         <div className="wrap">
           <NavLink className="button" to={`/courses/${id}/update`} >Update Course</NavLink>
-          <NavLink className="button" onClick={yeetCourse} to='/courses' >Delete Course</NavLink>
+          <NavLink className="button" onClick={yeetCourse} >Delete Course</NavLink>
           <NavLink className="button button-secondary" to='/courses' >Return to List</NavLink>
         </div>
       </div>

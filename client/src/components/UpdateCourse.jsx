@@ -53,6 +53,8 @@ const UpdateCourse = (props) => {
 
       if (response.status === 204) {
         console.log("Course details successfully updated!");
+        props.refreshCourses();
+        navigate(`/courses/${id}`);
       } else if (response.status === 403) {
         const data = await response.json();
         setErrors(data.errors);
