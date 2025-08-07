@@ -5,7 +5,8 @@ import ReactMarkdown from 'react-markdown';
 import UserContext from "../context/UserContext";
 
 const CourseDetail = (props) => {
-  const {authCredentials} = useContext(UserContext);
+  const { authCredentials } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [course, setCourse] = useState({});
@@ -14,7 +15,6 @@ const CourseDetail = (props) => {
     try {
       const response = await fetch(`http://localhost:5001/api/courses/${courseId}`);
       const data = await response.json();
-      console.log("Course:", data);
       setCourse(data);
     } catch (error) {
       console.error("Error fetching course:", error);
@@ -41,9 +41,20 @@ const CourseDetail = (props) => {
     <>
       <div className="actions--bar">
         <div className="wrap">
-          <NavLink className="button" to={`/courses/${id}/update`} >Update Course</NavLink>
-          <NavLink className="button" onClick={yeetCourse} >Delete Course</NavLink>
-          <NavLink className="button button-secondary" to='/courses' >Return to List</NavLink>
+          {authUser?.id ===
+            course?.User?.id && (
+              <>
+                <NavLink className="button" to={`/courses/${id}/update`}>
+                  Update Course
+                </NavLink>
+                <NavLink className="button" onClick={yeetCourse}>
+                  Delete Course
+                </NavLink>
+              </>
+            )}
+          <NavLink className="button button-secondary" to="/courses">
+            Return to List
+          </NavLink>
         </div>
       </div>
 
@@ -54,7 +65,9 @@ const CourseDetail = (props) => {
             <div>
               <h3 className="course--detail--title">Course</h3>
               <h4 className="course--name">{course?.title}</h4>
-              <p>By {course?.User?.firstName} {course?.User?.lastName}</p>
+              <p>
+                By {course?.User?.firstName} {course?.User?.lastName}
+              </p>
               <ReactMarkdown>{course?.description}</ReactMarkdown>
             </div>
             <div>
