@@ -11,6 +11,7 @@ import UserSignUp from "./components/UserSignUp";
 import UserSignIn from "./components/UserSignIn";
 import NotFound from "./components/NotFound";
 import Error from "./components/Error";
+import PrivateRoute from "./components/PrivateRoute";
 
 
 const App = () => {
@@ -20,7 +21,6 @@ const App = () => {
     try {
       const response = await fetch("http://localhost:5001/api/courses");
       const data = await response.json();
-      console.log("Courses:", data);
       setCourses(data)
     } catch (error) {
       console.error("Error fetching courses:", error);
@@ -35,17 +35,19 @@ const App = () => {
     <>
       <Header />
       <Routes>
-        <Route path="/sign-up" element={<UserSignUp />}/>
-        <Route path="/sign-in" element={<UserSignIn />}/>
-        <Route path="/courses" element={<Courses courses={courses} />}/>
+        <Route path="/sign-up" element={<UserSignUp />} />
+        <Route path="/sign-in" element={<UserSignIn />} />
+        <Route path="/courses" element={<Courses courses={courses} />} />
         <Route path="/courses/:id" element={<CourseDetail courses={courses} refreshCourses={fetchCourses} />}/>
-        <Route path="/courses/create" element={<CreateCourse refreshCourses={fetchCourses} />}/>
-        <Route path="/courses/:id/update" element={<UpdateCourse courses={courses} refreshCourses={fetchCourses}/>}/>
-        <Route path="/error" element={<Error /> } />
-        <Route path="*" element={<NotFound /> } />
+        <Route element={<PrivateRoute />}>
+          <Route path="/courses/create" element={<CreateCourse refreshCourses={fetchCourses} />}/>
+          <Route path="/courses/:id/update" element={<UpdateCourse courses={courses} refreshCourses={fetchCourses} />}/>
+        </Route>
+        <Route path="/error" element={<Error />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
-  )
+  );
 }
 
 export default App
