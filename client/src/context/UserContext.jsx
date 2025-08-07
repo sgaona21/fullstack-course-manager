@@ -1,11 +1,13 @@
 import { createContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
 
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
+    const cookie = Cookies.get("authenticatedUser")
     const navigate = useNavigate();
-    const [authUser, setAuthUser] = useState(null);
+    const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
     const [authCredentials, setAuthCredentials] = useState(null);
 
     const signIn = async (credentials) => {
@@ -22,6 +24,7 @@ export const UserProvider = (props) => {
           const user = await response.json();
           setAuthUser(user);
           setAuthCredentials(encodedCredentials)
+          Cookies.set("authenticatedUser", JSON.stringify(user), {expires: 1});
           return user
         } else if (response.status === 401) {
             return null
@@ -33,6 +36,7 @@ export const UserProvider = (props) => {
 
     const signOut = () => {
       setAuthUser(null);
+      Cookies.remove("authenticatedUser");
       navigate('/courses');
     }
 
