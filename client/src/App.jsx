@@ -38,7 +38,7 @@ const App = () => {
   //runs the fetchCourses function
   useEffect(() => {
     fetchCourses();
-  }, []);
+  });
   
   return (
     <>

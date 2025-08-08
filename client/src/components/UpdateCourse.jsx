@@ -12,34 +12,39 @@ const UpdateCourse = (props) => {
   const [errors, setErrors] = useState([]);
 
 
-  const fetchCourseDetails = async () => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/courses/${id}`)
-    
-      if (response.status === 200) {
-        const data = await response.json();
-        setCourseDetails(data)
-      } else if (response.status === 404) {
-        navigate('/notfound')
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      console.error("Error fetching course details:". error)
-      navigate('/error')
-    }
-  }
-
   useEffect(() => {
+    const fetchCourseDetails = async () => {
+      try {
+        const response = await fetch(`http://localhost:5001/api/courses/${id}`);
+        if (response.status === 200) {
+          const data = await response.json();
+          setCourseDetails(data);
+        } else if (response.status === 404) {
+          navigate("/notfound");
+        } else {
+          throw new Error();
+        }
+      } catch (error) {
+        console.log(error);
+        navigate("/error");
+      }
+    };
+
     fetchCourseDetails();
-  }, []);
+  }, [id, navigate]);
+
+
+
+
+
+
 
   //checks that authorized user id matches the course creator id match before allowing updateCouurse page to be rendered 
   useEffect(() => {
     if (courseDetails?.User?.id && authUser?.id !== courseDetails.User.id) {
       navigate('/forbidden')
     }
-  }, [courseDetails, authUser]);
+  }, [courseDetails, authUser, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
