@@ -10,6 +10,7 @@ const CourseDetail = (props) => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [course, setCourse] = useState({});
+  const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   const fetchCourseById = async (courseId) => {
     try {
@@ -26,35 +27,62 @@ const CourseDetail = (props) => {
     }, []);
 
   const yeetCourse = async () => {
-    const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
+    try {
+      const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json",
           "Authorization": `Basic ${authCredentials}`
         }
     })
-    props.refreshCourses();
-    navigate('/courses');
+      if (response.status === 204) {
+        console.log('Course deleted from db!')
+        props.refreshCourses();
+        navigate('/courses');
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+      navigate('/error');
+    }
+  }
+
+  const showDeleteRequest = () => {
+    if (deleteConfirm === false) {
+      setDeleteConfirm(true)
+    } else if (deleteConfirm === true) {
+      setDeleteConfirm(false)
+    }
   }
   
   return (
     <>
       <div className="actions--bar">
         <div className="wrap">
-          {authUser?.id ===
-            course?.User?.id && (
-              <>
-                <NavLink className="button" to={`/courses/${id}/update`}>
-                  Update Course
-                </NavLink>
-                <NavLink className="button" onClick={yeetCourse}>
-                  Delete Course
-                </NavLink>
-              </>
-            )}
+          {authUser?.id === course?.User?.id && (
+            <>
+              <NavLink className="button" to={`/courses/${id}/update`}>
+                Update Course
+              </NavLink>
+              <NavLink className="button" onClick={showDeleteRequest} >Delete Course</NavLink>
+            </>
+          )}
           <NavLink className="button button-secondary" to="/courses">
             Return to List
           </NavLink>
+          
+
+          {deleteConfirm && (
+            <>
+              <br /> <br />
+              <p>Are you sure you want to delete? Click to confirm</p>
+              <NavLink className="confirm-deletion" onClick={yeetCourse}>
+                CONFIRM DELETION
+              </NavLink>
+            </>
+          )}
+
         </div>
       </div>
 

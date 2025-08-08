@@ -180,6 +180,21 @@ textarea {
     font-weight: bold;
     transition: background 0.2s;
 }
+
+.confirm-deletion {
+    background: red;
+    color: #fff;
+    font-size: .75rem;
+    padding: .75rem 1.5rem;
+    border: 0;
+    margin: 0 0 .5rem 0;
+    display: block;
+    width: 210px;
+    text-align: center;
+    border-radius: .5rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
 .button:last-child {
     margin-bottom: 0;
 }
