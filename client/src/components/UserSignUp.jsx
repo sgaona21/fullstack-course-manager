@@ -57,6 +57,10 @@ const UserSignUp = () => {
       }
     };
 
+    const handleCancel = () => {
+      navigate('/')
+    }
+
 
     return (
       <div className="form--centered">
@@ -113,7 +117,7 @@ const UserSignUp = () => {
           <button className="button" type="submit">
             Sign Up
           </button>
-          <button className="button button-secondary" type="button">
+          <button className="button button-secondary" type="button" onClick={handleCancel} >
             Cancel
           </button>
         </form>
