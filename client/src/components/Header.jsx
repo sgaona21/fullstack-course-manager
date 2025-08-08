@@ -14,6 +14,7 @@ const Header = () => {
           <NavLink to="/courses">Courses</NavLink>
         </h1>
 
+        {/* dynamically current users name when logged in */}
         {context.authUser ? (
         <nav>
           <ul className="header--signedin">
@@ -25,6 +26,7 @@ const Header = () => {
         </nav>
         ) : null}
 
+        {/* checks if a user is logged in and if not, renders sign in/sign up options */}
         {!context.authUser ? (
         <nav>
           <ul className="header--signedout">

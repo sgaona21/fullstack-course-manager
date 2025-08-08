@@ -11,11 +11,12 @@ const UserSignIn = () => {
     const [loginInfo, setLoginInfo] = useState({
       emailAddress: '',
       password: ''
-    });
+    }); // holds user login info in state
     const [errors, setErrors] = useState([]);
     const location = useLocation();
 
     const handleChange = (e) => {
+      //allows real time input for sign in fields
       const { name, value } = e.target;
       setLoginInfo((prevData) => ({
         ...prevData,
@@ -24,6 +25,7 @@ const UserSignIn = () => {
     };
 
     const handleSubmit = async (e) => {
+      //submits sign in data to db for authentication
       e.preventDefault();
       let from = '/courses';
       if (location.state) {
@@ -57,6 +59,7 @@ const UserSignIn = () => {
       <div className="form--centered">
         <h2>Sign In</h2>
 
+        {/* dynamically renders list of validation errors based on what user was missing from form  */}
         {errors.length ? (
           <div className="validation--errors">
             <h3>Sign-In Errors</h3>

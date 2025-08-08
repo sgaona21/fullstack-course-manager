@@ -5,13 +5,14 @@ import Cookies from 'js-cookie';
 const UserContext = createContext(null);
 
 export const UserProvider = (props) => {
-    const cookie = Cookies.get("authenticatedUser");
+    const cookie = Cookies.get("authenticatedUser"); // saves encoded credentials in browser cookie
     const authCredCookie = Cookies.get("authCredentials");
     const navigate = useNavigate();
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
     const [authCredentials, setAuthCredentials] = useState( authCredCookie ? JSON.parse(authCredCookie) : null); // saves the encoded auth credentials and makes them globally available 
 
     const signIn = async (credentials) => {
+      //takes encoded credentials and signs user in. saves two cookies to the browser
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
 
         try {
@@ -41,6 +42,7 @@ export const UserProvider = (props) => {
     }
 
     const signOut = () => {
+      //signs user out and removes both cookies then navigates user back to the courses screen 
       setAuthUser(null);
       setAuthCredentials(null)
       Cookies.remove("authenticatedUser");

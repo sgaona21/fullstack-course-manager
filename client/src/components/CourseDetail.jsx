@@ -5,14 +5,15 @@ import ReactMarkdown from 'react-markdown';
 import UserContext from "../context/UserContext";
 
 const CourseDetail = (props) => {
-  const { authCredentials } = useContext(UserContext);
-  const { authUser } = useContext(UserContext);
+  const { authCredentials } = useContext(UserContext); //imports encoded credentials for user 
+  const { authUser } = useContext(UserContext); //imports user credentials 
   const navigate = useNavigate();
   const { id } = useParams();
   const [course, setCourse] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
   useEffect(() => {
+    //fetches course by specified id number
     const fetchCourseById = async (courseId) => {
       try {
         const response = await fetch(
@@ -38,6 +39,7 @@ const CourseDetail = (props) => {
 
 
   const yeetCourse = async () => {
+    // this checks to see if course is present in the db and then deletes it 
     try {
       const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
       method: "DELETE",
@@ -72,6 +74,8 @@ const CourseDetail = (props) => {
     <>
       <div className="actions--bar">
         <div className="wrap">
+
+          {/* checks user credentials before showing the option to update or delete course */}
           {authUser?.id === course?.User?.id && (
             <>
               <NavLink className="button" to={`/courses/${id}/update`}>

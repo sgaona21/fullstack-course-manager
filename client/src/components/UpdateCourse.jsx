@@ -6,7 +6,7 @@ import UserContext from "../context/UserContext";
 const UpdateCourse = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { authCredentials } = useContext(UserContext);
+  const { authCredentials } = useContext(UserContext); //stores users encoded credentials to maintain state upon page refresh
   const { authUser } = useContext(UserContext);
   const [courseDetails, setCourseDetails] = useState({});
   const [errors, setErrors] = useState([]);
@@ -14,6 +14,7 @@ const UpdateCourse = (props) => {
 
   useEffect(() => {
     const fetchCourseDetails = async () => {
+      //checks if course exists in db and retrieves info
       try {
         const response = await fetch(`http://localhost:5001/api/courses/${id}`);
         if (response.status === 200) {
@@ -41,7 +42,9 @@ const UpdateCourse = (props) => {
     }
   }, [courseDetails, authUser, navigate]);
 
+  
   const handleChange = (e) => {
+    //allows real time input values for form
     const { name, value } = e.target;
     setCourseDetails((prevData) => ({
       ...prevData,
@@ -50,6 +53,7 @@ const UpdateCourse = (props) => {
   };
 
   const submitUpdatedCourseDetails = async (e) => {
+    //submits newly updated course details to the db and validation checks 
     e.preventDefault();
 
     try {
@@ -79,6 +83,7 @@ const UpdateCourse = (props) => {
   }
 
   const handleCancel = () => {
+    //adds functionality to cancel button that navigates user back to courses page 
     navigate(`/courses/${id}`)
   }
   
@@ -86,6 +91,7 @@ const UpdateCourse = (props) => {
     <div className="wrap">
       <h2>Update Course</h2>
 
+      {/* dynamically renders list of validation errors based on what user was missing from form  */}
       {errors.length ? (
         <div className="validation--errors">
           <h3>Course Update Errors</h3>

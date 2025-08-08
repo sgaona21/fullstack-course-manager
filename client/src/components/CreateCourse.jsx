@@ -13,10 +13,11 @@ const CreateCourse = (props) => {
     description: '',
     estimatedTime: '',
     materialsNeeded: '',
-  });
+  }); //creates course object to send to the db. includes current users id
   const [errors, setErrors] = useState([]);
 
   const handleChange = (e) => {
+    // allows form to be edited with real time input
     const { name, value } = e.target;
     setNewCourse((prevData) => ({
       ...prevData,
@@ -27,6 +28,7 @@ const CreateCourse = (props) => {
   const submitNewCourseData = async (e) => {
     e.preventDefault();
 
+    //submits new course data to db 
     try {
       const response = await fetch("http://localhost:5001/api/courses", {
         method: "POST",
@@ -53,6 +55,7 @@ const CreateCourse = (props) => {
   }
 
   const handleCancel = (e) => {
+    //provides functionality for cancel button and navigates user back to courses screen
     e.preventDefault();
     navigate('/courses')
   }
@@ -62,6 +65,7 @@ const CreateCourse = (props) => {
     <div className="wrap">
       <h2>Create Course</h2>
 
+      {/* renders a list of validation errors to the screen if they are detected in errors array  */}
       {errors.length ? (
         <div className="validation--errors">
           <h3>Course Creation Errors</h3>

@@ -5,6 +5,7 @@ import UserContext from "../context/UserContext";
 
 
 const PrivateRoute = () => {
+    //creates a private route that only allows logged in users to access the create course and update routes 
     const { authUser } = useContext(UserContext);
     const location = useLocation();
 

@@ -20,6 +20,7 @@ const App = () => {
   const navigate = useNavigate();
 
   const fetchCourses = async () => {
+    //retrieves list of all courses currently in the db
     try {
       const response = await fetch("http://localhost:5001/api/courses");
 
@@ -36,6 +37,7 @@ const App = () => {
   };
   
   useEffect(() => {
+    //calls the fetchCourses function and refreshes upon user nav
     fetchCourses();
   }, [navigate]);
   

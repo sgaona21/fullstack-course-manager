@@ -12,7 +12,7 @@ const UserSignUp = () => {
         lastName: '',
         emailAddress: '',
         password: ''
-    });
+    }); //creates object with all needed user info to create new user
     const [errors, setErrors] = useState([]);
 
     const credentials = {
@@ -21,6 +21,7 @@ const UserSignUp = () => {
     }
 
     const handleChange = (e) => {
+      //allows for real time form input 
       const { name, value } = e.target;
       setNewUser((prevData) => ({
         ...prevData,
@@ -29,6 +30,7 @@ const UserSignUp = () => {
     };
 
     const submitNewUser = async (e) => {
+      //submit new user data to db and checks for errors, signs user in and navigates to courses page upon successful user creation
       e.preventDefault();
 
       try {
@@ -58,6 +60,7 @@ const UserSignUp = () => {
     };
 
     const handleCancel = () => {
+      //allows user to exit the sign up form and return to courses page 
       navigate('/')
     }
 
@@ -66,6 +69,7 @@ const UserSignUp = () => {
       <div className="form--centered">
         <h2>Sign Up</h2>
 
+        {/* dynamically renders a list of validation errors depending on what user input into the sign up form  */}
         {errors.length ? (
           <div className="validation--errors">
             <h3>Sign Up Errors</h3>

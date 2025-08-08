@@ -4,6 +4,8 @@ const Courses = (props) => {
   
   return (
     <div className="wrap main--grid">
+
+      {/* renders courses pulled from db passed from props  */}
       {props.courses.map((course) => (
         <NavLink className="course--module course--link" key={course.id} to={`/courses/${course.id}`}>
           <h2 className="course--label">Course</h2>
