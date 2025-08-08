@@ -7,6 +7,7 @@ const UpdateCourse = (props) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { authCredentials } = useContext(UserContext);
+  const { authUser } = useContext(UserContext);
   const [courseDetails, setCourseDetails] = useState({});
   const [errors, setErrors] = useState([]);
 
@@ -14,7 +15,7 @@ const UpdateCourse = (props) => {
   const fetchCourseDetails = async () => {
     try {
       const response = await fetch(`http://localhost:5001/api/courses/${id}`)
-      
+    
       if (response.status === 200) {
         const data = await response.json();
         setCourseDetails(data)
@@ -31,6 +32,12 @@ const UpdateCourse = (props) => {
   useEffect(() => {
     fetchCourseDetails();
   }, []);
+
+  useEffect(() => {
+    if (courseDetails?.User?.id && authUser?.id !== courseDetails.User.id) {
+      navigate('/forbidden')
+    }
+  }, [courseDetails, authUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
