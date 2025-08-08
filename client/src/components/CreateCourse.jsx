@@ -83,7 +83,7 @@ const CreateCourse = (props) => {
               onChange={handleChange}
             />
 
-            <p>By Joe Smith </p>
+            <p>By {context?.authUser?.name} {context?.authUser?.lastName} </p>
 
             <label htmlFor="courseDescription">Course Description</label>
             <textarea
