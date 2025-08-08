@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 //Components
@@ -17,6 +17,7 @@ import Forbidden from "./components/Forbidden";
 
 const App = () => {
   const [courses, setCourses] = useState([]); // manages all courses in db
+  const navigate = useNavigate();
 
   const fetchCourses = async () => {
     try {
