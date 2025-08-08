@@ -32,7 +32,7 @@ const CourseDetail = (props) => {
 
   useEffect(() => {
       fetchCourseById(id);
-    }, []);
+    }, [fetchCourseById, id]);
 
   const yeetCourse = async () => {
     try {
