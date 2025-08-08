@@ -35,11 +35,11 @@ const App = () => {
     }
   };
   
-  //runs the fetchCourses function
   useEffect(() => {
     fetchCourses();
-  });
+  }, [navigate]);
   
+
   return (
     <>
       <Header />

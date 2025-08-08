@@ -12,27 +12,30 @@ const CourseDetail = (props) => {
   const [course, setCourse] = useState({});
   const [deleteConfirm, setDeleteConfirm] = useState(false);
 
-  const fetchCourseById = async (courseId) => {
-    try {
-      const response = await fetch(`http://localhost:5001/api/courses/${courseId}`);
-      
-      if (response.status === 200) {
-        const data = await response.json();
-        setCourse(data);
-      } else if (response.status === 404) {
-        navigate('/notfound')
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      console.error("Error fetching course:", error);
-      navigate('/error');
-    }
-  };
-
   useEffect(() => {
-      fetchCourseById(id);
-    });
+    const fetchCourseById = async (courseId) => {
+      try {
+        const response = await fetch(
+          `http://localhost:5001/api/courses/${courseId}`
+        );
+
+        if (response.status === 200) {
+          const data = await response.json();
+          setCourse(data);
+        } else if (response.status === 404) {
+          navigate("/notfound");
+        } else {
+          throw new Error();
+        }
+      } catch (error) {
+        console.error("Error fetching course:", error);
+        navigate("/error");
+      }
+    };
+
+    fetchCourseById(id);
+  }, [id, navigate]);
+
 
   const yeetCourse = async () => {
     try {
