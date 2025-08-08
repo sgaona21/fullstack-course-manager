@@ -27,6 +27,7 @@ const CourseDetail = (props) => {
       }
     } catch (error) {
       console.error("Error fetching course:", error);
+      navigate('/error');
     }
   };
 

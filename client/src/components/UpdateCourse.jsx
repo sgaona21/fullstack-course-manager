@@ -26,6 +26,7 @@ const UpdateCourse = (props) => {
       }
     } catch (error) {
       console.error("Error fetching course details:". error)
+      navigate('/error')
     }
   }
 

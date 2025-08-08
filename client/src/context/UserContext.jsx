@@ -14,12 +14,13 @@ export const UserProvider = (props) => {
     const signIn = async (credentials) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
 
-        const response = await fetch('http://localhost:5001/api/users', {
-          method: "GET",
-          headers: {
-            Authorization: `Basic ${encodedCredentials}`
-          }
-        })
+        try {
+          const response = await fetch('http://localhost:5001/api/users', {
+            method: "GET",
+            headers: {
+              Authorization: `Basic ${encodedCredentials}`
+            }
+          })
 
         if (response.status === 200) {
           const user = await response.json();
@@ -32,6 +33,10 @@ export const UserProvider = (props) => {
             return null
         } else {
           throw new Error;
+        }
+        } catch (error) {
+          console.log(error);
+          navigate('/error');
         }
     }
 

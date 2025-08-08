@@ -30,6 +30,7 @@ const App = () => {
       }
     } catch (error) {
       console.error("Error fetching courses:", error);
+      navigate('/error');
     }
   };
 
