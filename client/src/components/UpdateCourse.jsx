@@ -14,8 +14,15 @@ const UpdateCourse = (props) => {
   const fetchCourseDetails = async () => {
     try {
       const response = await fetch(`http://localhost:5001/api/courses/${id}`)
-      const data = await response.json();
-      setCourseDetails(data)
+      
+      if (response.status === 200) {
+        const data = await response.json();
+        setCourseDetails(data)
+      } else if (response.status === 404) {
+        navigate('/notfound')
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       console.error("Error fetching course details:". error)
     }

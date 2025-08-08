@@ -12,6 +12,7 @@ import UserSignIn from "./components/UserSignIn";
 import NotFound from "./components/NotFound";
 import Error from "./components/Error";
 import PrivateRoute from "./components/PrivateRoute";
+import Forbidden from "./components/Forbidden";
 
 
 const App = () => {
@@ -20,8 +21,13 @@ const App = () => {
   const fetchCourses = async () => {
     try {
       const response = await fetch("http://localhost:5001/api/courses");
-      const data = await response.json();
-      setCourses(data)
+
+      if (response.status === 200) {
+        const data = await response.json();
+        setCourses(data)
+      } else {
+        throw new Error();
+      }
     } catch (error) {
       console.error("Error fetching courses:", error);
     }
@@ -45,6 +51,7 @@ const App = () => {
           <Route path="/courses/:id/update" element={<UpdateCourse courses={courses} refreshCourses={fetchCourses} />}/>
         </Route>
         <Route path="/error" element={<Error />} />
+        <Route path="/forbidden" element={<Forbidden />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>
