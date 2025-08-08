@@ -34,6 +34,7 @@ const UpdateCourse = (props) => {
     fetchCourseDetails();
   }, []);
 
+  //checks that authorized user id matches the course creator id match before allowing updateCouurse page to be rendered 
   useEffect(() => {
     if (courseDetails?.User?.id && authUser?.id !== courseDetails.User.id) {
       navigate('/forbidden')

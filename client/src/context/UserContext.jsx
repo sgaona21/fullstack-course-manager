@@ -9,7 +9,7 @@ export const UserProvider = (props) => {
     const authCredCookie = Cookies.get("authCredentials");
     const navigate = useNavigate();
     const [authUser, setAuthUser] = useState(cookie ? JSON.parse(cookie) : null);
-    const [authCredentials, setAuthCredentials] = useState( authCredCookie ? JSON.parse(authCredCookie) : null);
+    const [authCredentials, setAuthCredentials] = useState( authCredCookie ? JSON.parse(authCredCookie) : null); // saves the encoded auth credentials and makes them globally available 
 
     const signIn = async (credentials) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);

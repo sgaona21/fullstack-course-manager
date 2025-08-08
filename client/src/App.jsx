@@ -33,7 +33,7 @@ const App = () => {
       navigate('/error');
     }
   };
-
+  //runs the fetchCourses function
   useEffect(() => {
     fetchCourses();
   }, []);

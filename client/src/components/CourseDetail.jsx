@@ -57,6 +57,7 @@ const CourseDetail = (props) => {
     }
   }
 
+  //toggles the deleteRequest boolean 
   const showDeleteRequest = () => {
     if (deleteConfirm === false) {
       setDeleteConfirm(true)
@@ -81,7 +82,7 @@ const CourseDetail = (props) => {
             Return to List
           </NavLink>
           
-
+          {/* dynamically renders a delete confirmation based on toggle */}
           {deleteConfirm && (
             <>
               <br /> <br />
