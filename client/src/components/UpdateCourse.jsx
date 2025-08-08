@@ -83,7 +83,7 @@ const UpdateCourse = (props) => {
               onChange={handleChange}
             />
 
-            <p>By Joe Smith</p>
+            <p>By {courseDetails?.User?.firstName} {courseDetails?.User?.lastName}</p>
 
             <label htmlFor="courseDescription">Course Description</label>
             <textarea
