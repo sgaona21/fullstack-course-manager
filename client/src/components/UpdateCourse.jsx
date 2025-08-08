@@ -46,15 +46,13 @@ const UpdateCourse = (props) => {
         body: JSON.stringify(courseDetails),
       });
 
-      if (response.status === 204) {
-        console.log("Course details successfully updated!");
+       if (response.status === 204) {
+        console.log("Course successfully updated!");
         props.refreshCourses();
         navigate(`/courses/${id}`);
-      } else if (response.status === 403) {
+      } else if (response.status === 400) {
         const data = await response.json();
-        setErrors(data.errors ?? [data.message ?? 'Forbidden']);
-      } else if (response.status === 401) {
-        setErrors(['You must be signed in.']);
+        setErrors(data.errors);
       } else {
         throw new Error();
       }
@@ -71,6 +69,16 @@ const UpdateCourse = (props) => {
   return (
     <div className="wrap">
       <h2>Update Course</h2>
+
+      {errors.length ? (
+        <div className="validation--errors">
+          <h3>Course Update Errors</h3>
+          <ul>
+            {errors.map((error, i) => <li key={i}>{error}</li>)}
+          </ul>
+        </div>
+      ) : null }
+
       <form onSubmit={submitUpdatedCourseDetails} >
         <div className="main--flex">
           <div>
