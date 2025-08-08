@@ -20,7 +20,6 @@ const CourseDetail = (props) => {
         const data = await response.json();
         setCourse(data);
       } else if (response.status === 404) {
-        const data = await response.json();
         navigate('/notfound')
       } else {
         throw new Error();
