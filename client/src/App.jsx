@@ -22,7 +22,8 @@ const App = () => {
   const fetchCourses = async () => {
     //retrieves list of all courses currently in the db
     try {
-      const response = await fetch("http://localhost:5001/api/courses");
+      // const response = await fetch("http://localhost:5001/api/courses");
+      const response = await fetch("https://fullstack-course-manager-production.up.railway.app/api/courses");
 
       if (response.status === 200) {
         const data = await response.json();
