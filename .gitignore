@@ -63,5 +63,3 @@ typings/
 # Local configs
 *.local
 
-# SQLite
-*.db
