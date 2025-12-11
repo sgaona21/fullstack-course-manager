@@ -13,10 +13,10 @@ Users can:
 
 Installation & Setup:
 Server Side:
--cd to client and run "npm install" to install dependencies for front end
--run npm start in terminal
--can run "npm run seed" to reset db with default data 
+- cd to client and run "npm install" to install dependencies for front end
+- run npm start in terminal
+- can run "npm run seed" to reset db with default data 
 
 Client Side: 
--cd to api and run "npm install" to install dependencies for server
--run "npm run dev" to start application 
+- cd to api and run "npm install" to install dependencies for server
+- run "npm run dev" to start application 
