@@ -1,4 +1,4 @@
-A fullstack CRUD application for managing courses
+A fullstack CRUD application for managing courses. This was an educational project meant to demonstrate the basics of fullstack development. 
 
 Built with:
 Frontend: React + React Router
@@ -14,12 +14,9 @@ Create, update, and delete their own courses
 Installation & Setup:
 Server Side:
 -cd to client and run "npm install" to install dependencies for front end
--run npm start in terminal to start server 
+-run npm start in terminal
 -can run "npm run seed" to reset db with default data 
-Server runs on http://localhost:5001
-
 
 Client Side: 
 -cd to api and run "npm install" to install dependencies for server
 -run "npm run dev" to start application 
--Front end runs on http://localhost:5173
