@@ -11,6 +11,11 @@ Users can:
 - Sign up and sign in
 - Create, update, and delete their own courses
 
+Deployment:
+
+This project is deployed via Railway:
+https://desirable-smile-production.up.railway.app
+
 Installation & Setup:
 Server Side:
 - cd to client and run "npm install" to install dependencies for front end
