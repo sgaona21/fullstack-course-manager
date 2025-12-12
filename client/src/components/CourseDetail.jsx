@@ -17,7 +17,7 @@ const CourseDetail = (props) => {
     const fetchCourseById = async (courseId) => {
       try {
         const response = await fetch(
-          `http://localhost:5001/api/courses/${courseId}`
+          `https://fullstack-course-manager-production.up.railway.app/api/courses/${courseId}`
         );
 
         if (response.status === 200) {
@@ -41,7 +41,7 @@ const CourseDetail = (props) => {
   const yeetCourse = async () => {
     // this checks to see if course is present in the db and then deletes it 
     try {
-      const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
+      const response = await fetch(`https://fullstack-course-manager-production.up.railway.app/api/courses/${id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json",

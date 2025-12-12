@@ -30,7 +30,7 @@ const CreateCourse = (props) => {
 
     //submits new course data to db 
     try {
-      const response = await fetch("http://localhost:5001/api/courses", {
+      const response = await fetch("https://fullstack-course-manager-production.up.railway.app/api/courses", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

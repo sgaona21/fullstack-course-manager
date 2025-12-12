@@ -13,7 +13,16 @@ const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'tr
 const app = express();
 
 //CORS
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5001', // dev
+    'https://desirable-smile-production.up.railway.app',
+    'https://fullstack-course-manager-production.up.railway.app/', // prod
+    // or your custom domain
+  ],
+  credentials: true, // if you ever send cookies/auth
+}));
 
 app.use(express.json()); // parse incoming objects to json
 
