@@ -18,7 +18,7 @@ app.use(cors({
   origin: [
     'http://localhost:5001', // dev
     'https://desirable-smile-production.up.railway.app',
-    'https://fullstack-course-manager-production.up.railway.app/', // prod
+    'https://fullstack-course-manager-production.up.railway.app', // prod
     // or your custom domain
   ],
   credentials: true, // if you ever send cookies/auth
