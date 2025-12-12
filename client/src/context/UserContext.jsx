@@ -16,7 +16,7 @@ export const UserProvider = (props) => {
         const encodedCredentials = btoa(`${credentials.emailAddress}:${credentials.password}`);
 
         try {
-          const response = await fetch('http://localhost:5001/api/users', {
+          const response = await fetch('https://fullstack-course-manager-production.up.railway.app/api/users', {
             method: "GET",
             headers: {
               Authorization: `Basic ${encodedCredentials}`
