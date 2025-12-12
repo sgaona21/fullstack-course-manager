@@ -16,7 +16,7 @@ const UpdateCourse = (props) => {
     const fetchCourseDetails = async () => {
       //checks if course exists in db and retrieves info
       try {
-        const response = await fetch(`http://localhost:5001/api/courses/${id}`);
+        const response = await fetch(`https://fullstack-course-manager-production.up.railway.app/api/courses/${id}`);
         if (response.status === 200) {
           const data = await response.json();
           setCourseDetails(data);
@@ -57,7 +57,7 @@ const UpdateCourse = (props) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:5001/api/courses/${id}`, {
+      const response = await fetch(`https://fullstack-course-manager-production.up.railway.app/api/courses/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
